@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -20,7 +21,6 @@ public class NetworkCheckActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
     public static final String BroadcastStringForAction = "checkinternet";
-    Button btnSubmit;
     TextView txtNotSubmit;
     private IntentFilter mIntentFilter;
 
@@ -29,15 +29,12 @@ public class NetworkCheckActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_network_check);
 
-        btnSubmit = findViewById(R.id.btnSubmit);
         txtNotSubmit = findViewById(R.id.txtNotSubmit);
 
         mIntentFilter = new IntentFilter();
         mIntentFilter.addAction(BroadcastStringForAction);
         Intent serviceIntent = new Intent(this, MyService.class);
         startService(serviceIntent);
-
-        txtNotSubmit.setVisibility(View.GONE);
 
         if (isOnline(this)){
             Set_Visibilty_ON();
@@ -74,13 +71,13 @@ public class NetworkCheckActivity extends AppCompatActivity {
     }
 
     public void Set_Visibilty_OFF(){
-        btnSubmit.setVisibility(View.GONE);
-        txtNotSubmit.setVisibility(View.VISIBLE);
+        txtNotSubmit.setText("NOT CONNECT");
+        txtNotSubmit.setTextColor(Color.RED);
     }
 
     public void Set_Visibilty_ON(){
-        btnSubmit.setVisibility(View.VISIBLE);
-        txtNotSubmit.setVisibility(View.GONE);
+        txtNotSubmit.setText("CONNECT");
+        txtNotSubmit.setTextColor(Color.GREEN);
     }
 
     @Override
